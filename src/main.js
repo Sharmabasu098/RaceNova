@@ -49,72 +49,6 @@ class RaceNovaEngine {
     initialize() {
 
         this.createManagers();
-            createWorld() {
-
-        // ==========================
-        // Build Road
-        // ==========================
-        this.roadBuilder = new RoadBuilder(this.scene);
-        this.roadBuilder.build();
-
-        // ==========================
-        // Lane Markings
-        // ==========================
-        this.roadMarkings = new RoadMarkings();
-        this.scene.add(
-            this.roadMarkings.getMesh()
-        );
-
-        // ==========================
-        // Road Barriers
-        // ==========================
-        this.roadBarrier = new RoadBarrier();
-        this.scene.add(
-            this.roadBarrier.getMesh()
-        );
-
-        // ==========================
-        // Future World Modules
-        // ==========================
-
-        // Player Vehicle
-        this.player = null;
-
-        // AI Traffic
-        this.trafficManager = null;
-
-        // Coin System
-        this.coinManager = null;
-
-        // Nitro System
-        this.nitroManager = null;
-
-        // Environment
-        this.environmentManager = null;
-
-        // Audio
-        this.audioManager = null;
-
-        // UI
-        this.uiManager = null;
-
-        console.log("✅ RaceNova World Initialized");
-
-    }
-
-    registerEvents() {
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                this.cameraManager.updateAspect();
-                this.rendererManager.resize();
-
-            }
-        );
-
-    }
         this.createWorld();
         this.registerEvents();
 
@@ -140,3 +74,49 @@ class RaceNovaEngine {
             new LightingManager(this.scene);
 
     }
+
+    createWorld() {
+
+        // Road
+        this.roadBuilder = new RoadBuilder(this.scene);
+        this.roadBuilder.build();
+
+        // Lane Markings
+        this.roadMarkings = new RoadMarkings();
+        this.scene.add(
+            this.roadMarkings.getMesh()
+        );
+
+        // Road Barriers
+        this.roadBarrier = new RoadBarrier();
+        this.scene.add(
+            this.roadBarrier.getMesh()
+        );
+
+        // Future Modules
+        this.player = null;
+        this.trafficManager = null;
+        this.coinManager = null;
+        this.nitroManager = null;
+        this.environmentManager = null;
+        this.audioManager = null;
+        this.uiManager = null;
+
+        console.log("✅ RaceNova World Initialized");
+
+    }
+
+    registerEvents() {
+
+        window.addEventListener("resize", () => {
+
+            this.cameraManager.updateAspect();
+            this.rendererManager.resize();
+
+        });
+
+    }
+
+}
+
+export default RaceNovaEngine;
