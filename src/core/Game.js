@@ -149,3 +149,237 @@ class Game {
         console.log("World Loaded");
 
     }
+
+        /**
+     * ==========================
+     * Register Events
+     * ==========================
+     */
+
+    registerEvents() {
+
+        window.addEventListener(
+            "resize",
+            () => this.onResize()
+        );
+
+    }
+
+    /**
+     * ==========================
+     * Start Game
+     * ==========================
+     */
+
+    start() {
+
+        if (this.running) return;
+
+        this.running = true;
+        this.lastTime = performance.now();
+
+        this.loop(this.lastTime);
+
+        console.log("Game Started");
+
+    }
+
+    /**
+     * ==========================
+     * Main Game Loop
+     * ==========================
+     */
+
+    loop(currentTime) {
+
+        if (!this.running) return;
+
+        this.deltaTime =
+            (currentTime - this.lastTime) / 1000;
+
+        this.lastTime = currentTime;
+
+        if (!this.paused) {
+
+            this.update(this.deltaTime);
+
+            this.render();
+
+        }
+
+        this.frameId =
+            requestAnimationFrame(
+                (time) => this.loop(time)
+            );
+
+    }
+
+    /**
+     * ==========================
+     * Update
+     * ==========================
+     */
+
+    update(deltaTime) {
+
+        if (
+            this.roadBuilder &&
+            typeof this.roadBuilder.update === "function"
+        ) {
+
+            this.roadBuilder.update(deltaTime);
+
+        }
+
+        if (
+            this.player &&
+            typeof this.player.update === "function"
+        ) {
+
+            this.player.update(deltaTime);
+
+        }
+
+        if (
+            this.aiManager &&
+            typeof this.aiManager.update === "function"
+        ) {
+
+            this.aiManager.update(deltaTime);
+
+        }
+
+    }
+
+    /**
+     * ==========================
+     * Render
+     * ==========================
+     */
+
+    render() {
+
+        this.renderer.render(
+            this.scene,
+            this.camera
+        );
+
+    }
+
+    /**
+     * ==========================
+     * Window Resize
+     * ==========================
+     */
+
+    onResize() {
+
+        if (this.cameraManager) {
+
+            this.cameraManager.updateAspect();
+
+        }
+
+        if (this.rendererManager) {
+
+            this.rendererManager.resize();
+
+        }
+
+    }
+
+        /**
+     * ==========================
+     * Pause Game
+     * ==========================
+     */
+
+    pause() {
+
+        this.paused = true;
+
+        console.log("Game Paused");
+
+    }
+
+    /**
+     * ==========================
+     * Resume Game
+     * ==========================
+     */
+
+    resume() {
+
+        this.paused = false;
+
+        console.log("Game Resumed");
+
+    }
+
+    /**
+     * ==========================
+     * Stop Game
+     * ==========================
+     */
+
+    stop() {
+
+        this.running = false;
+
+        if (this.frameId) {
+
+            cancelAnimationFrame(this.frameId);
+
+            this.frameId = null;
+
+        }
+
+        console.log("Game Stopped");
+
+    }
+
+    /**
+     * ==========================
+     * Restart Game
+     * ==========================
+     */
+
+    restart() {
+
+        this.stop();
+
+        this.init();
+
+        this.start();
+
+        console.log("Game Restarted");
+
+    }
+
+    /**
+     * ==========================
+     * Getters
+     * ==========================
+     */
+
+    getScene() {
+
+        return this.scene;
+
+    }
+
+    getCamera() {
+
+        return this.camera;
+
+    }
+
+    getRenderer() {
+
+        return this.renderer;
+
+    }
+
+}
+
+export default Game;
