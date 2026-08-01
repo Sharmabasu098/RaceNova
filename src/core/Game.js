@@ -15,6 +15,7 @@ import LightingManager from "./lighting/LightingManager.js";
 import RoadBuilder from "../world/RoadBuilder.js";
 import RoadBarrier from "../world/RoadBarrier.js";
 import RoadMarkings from "../world/RoadMarkings.js";
+import PlayerCar from "../player/PlayerCar.js";
 
 class Game {
 
@@ -120,35 +121,42 @@ class Game {
     }
 
     /**
-     * ==========================
-     * Create World
-     * ==========================
-     */
+ * ==========================
+ * Create World
+ * ==========================
+ */
 
-    createWorld() {
+createWorld() {
 
-        this.roadBuilder =
-            new RoadBuilder(this.scene);
+    this.roadBuilder =
+        new RoadBuilder(this.scene);
 
-        this.roadBuilder.build();
+    this.roadBuilder.build();
 
-        this.roadMarkings =
-            new RoadMarkings();
+    this.roadMarkings =
+        new RoadMarkings();
 
-        this.scene.add(
-            this.roadMarkings.getMesh()
-        );
+    this.scene.add(
+        this.roadMarkings.getMesh()
+    );
 
-        this.roadBarrier =
-            new RoadBarrier();
+    this.roadBarrier =
+        new RoadBarrier();
 
-        this.scene.add(
-            this.roadBarrier.getMesh()
-        );
+    this.scene.add(
+        this.roadBarrier.getMesh()
+    );
 
-        console.log("World Loaded");
+    // ==========================
+    // Player Car
+    // ==========================
 
-    }
+    this.player =
+        new PlayerCar(this.scene);
+
+    console.log("World Loaded");
+
+}
 
         /**
      * ==========================
