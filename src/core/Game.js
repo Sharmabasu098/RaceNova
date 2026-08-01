@@ -16,6 +16,7 @@ import RoadBuilder from "../world/RoadBuilder.js";
 import RoadBarrier from "../world/RoadBarrier.js";
 import RoadMarkings from "../world/RoadMarkings.js";
 import PlayerCar from "../player/PlayerCar.js";
+import TouchControls from "../controls/TouchControls.js";
 
 class Game {
 
@@ -147,12 +148,11 @@ createWorld() {
         this.roadBarrier.getMesh()
     );
 
-    // ==========================
-    // Player Car
-    // ==========================
-
     this.player =
         new PlayerCar(this.scene);
+
+    this.touchControls =
+        new TouchControls(this.player);
 
     console.log("World Loaded");
 
