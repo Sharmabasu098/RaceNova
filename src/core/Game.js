@@ -18,6 +18,7 @@ import RoadMarkings from "../world/RoadMarkings.js";
 import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
+import WorldScroller from "../world/WorldScroller.js";
 
 class Game {
 
@@ -31,6 +32,7 @@ class Game {
         this.cameraManager = null;
         this.rendererManager = null;
         this.lightingManager = null;
+        this.worldScroller = null;
 
         // ==========================
         // Three.js References
