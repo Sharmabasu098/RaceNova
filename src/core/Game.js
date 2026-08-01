@@ -17,6 +17,7 @@ import RoadBarrier from "../world/RoadBarrier.js";
 import RoadMarkings from "../world/RoadMarkings.js";
 import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
+import RoadManager from "../world/RoadManager.js";
 
 class Game {
 
@@ -46,6 +47,7 @@ class Game {
         this.roadBuilder = null;
         this.roadBarrier = null;
         this.roadMarkings = null;
+        this.roadManager = null;
 
         // ==========================
         // Future Modules
@@ -154,6 +156,15 @@ createWorld() {
     this.touchControls =
         new TouchControls(this.player);
 
+    this.roadManager =
+    new RoadManager(
+        this.roadBuilder,
+        this.roadMarkings,
+        this.roadBarrier
+    );
+
+this.roadManager.start();
+
     console.log("World Loaded");
 
 }
@@ -229,6 +240,15 @@ createWorld() {
      */
 
     update(deltaTime) {
+
+        if (
+    this.roadManager &&
+    typeof this.roadManager.update === "function"
+) {
+
+    this.roadManager.update(deltaTime);
+
+        }
 
         if (
             this.roadBuilder &&
