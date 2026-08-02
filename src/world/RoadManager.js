@@ -42,9 +42,9 @@ export default class RoadManager {
 
     setSpeed(speed) {
 
-        this.speed = Math.min(speed, this.maxSpeed);
+    this.speed = Math.min(speed, this.maxSpeed);
 
-    }
+}
 
 update(deltaTime) {
 
@@ -77,5 +77,7 @@ update(deltaTime) {
         }
 
     }
+
+}
 
 }
