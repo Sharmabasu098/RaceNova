@@ -11,7 +11,8 @@ export default class TouchControls {
 
         this.player = player;
 
-        this.moveSpeed = 0.15;
+        this.leftPressed = false;
+        this.rightPressed = false;
 
         this.init();
 
@@ -25,15 +26,38 @@ export default class TouchControls {
 
             if (x < window.innerWidth / 2) {
 
-                this.player.getMesh().position.x -= this.moveSpeed;
+                this.leftPressed = true;
 
             } else {
 
-                this.player.getMesh().position.x += this.moveSpeed;
+                this.rightPressed = true;
 
             }
 
         });
+
+        window.addEventListener("touchend", () => {
+
+            this.leftPressed = false;
+            this.rightPressed = false;
+
+        });
+
+    }
+
+    update(deltaTime) {
+
+        if (this.leftPressed) {
+
+            this.player.moveLeft(deltaTime);
+
+        }
+
+        if (this.rightPressed) {
+
+            this.player.moveRight(deltaTime);
+
+        }
 
     }
 
