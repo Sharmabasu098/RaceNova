@@ -5,6 +5,7 @@
  * Version : 1.0
  * ============================================================
  */
+import RoadPool from "./RoadPool.js";
 
 export default class RoadManager {
 
@@ -16,29 +17,19 @@ export default class RoadManager {
 
         this.speed = 0.0;
         this.maxSpeed = 0.35;
+        this.roadPool = null;
 
     }
 
-    start() {
+    start(scene) {
 
-        this.speed = 0.08;
+    this.speed = 0.08;
 
-    }
+    if (!this.roadPool) {
 
-    stop() {
-
-        this.speed = 0;
+        this.roadPool = new RoadPool(scene);
 
     }
-
-    update(deltaTime) {
-
-        // अगले Version में
-        // Endless Road
-        // Speed
-        // Nitro
-        // Traffic
-        // सब यहीं आएगा
 
     }
 
