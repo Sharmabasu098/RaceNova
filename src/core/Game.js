@@ -18,6 +18,7 @@ import RoadMarkings from "../world/RoadMarkings.js";
 import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
+import TrafficManager from "../traffic/TrafficManager.js";
 
 class Game {
 
@@ -63,6 +64,7 @@ class Game {
         this.audioManager = null;
         this.uiManager = null;
         this.physicsManager = null;
+        this.trafficManager = null;
 
         // ==========================
         // Game State
@@ -156,6 +158,14 @@ createWorld() {
 
     this.touchControls =
         new TouchControls(this.player);
+
+    this.trafficManager =
+    new TrafficManager(this.scene);
+
+this.trafficManager.spawnCar(
+    0,
+    -30
+);
 
     this.roadManager =
     new RoadManager(
@@ -266,6 +276,17 @@ this.roadManager.start(this.scene);
         ) {
 
             this.player.update(deltaTime);
+
+        }
+
+        if (
+    this.trafficManager &&
+    typeof this.trafficManager.update === "function"
+) {
+
+    this.trafficManager.update(
+        this.roadManager.getSpeed()
+    );
 
         }
 
