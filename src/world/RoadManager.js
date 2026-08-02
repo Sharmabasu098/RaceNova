@@ -6,6 +6,7 @@
  * ============================================================
  */
 import RoadPool from "./RoadPool.js";
+import { WORLD } from "../constants/worldConstants.js";
 
 export default class RoadManager {
 
@@ -42,6 +43,40 @@ export default class RoadManager {
     setSpeed(speed) {
 
         this.speed = Math.min(speed, this.maxSpeed);
+
+    }
+
+}
+
+update(deltaTime) {
+
+    if (!this.roadPool) return;
+
+    const segments = this.roadPool.getSegments();
+
+    for (const segment of segments) {
+
+        segment.update(this.speed);
+
+        if (segment.getZ() > WORLD.ROAD_LENGTH) {
+
+            let farthest = 0;
+
+            for (const s of segments) {
+
+                if (s.getZ() < farthest) {
+
+                    farthest = s.getZ();
+
+                }
+
+            }
+
+            segment.setZ(
+                farthest - WORLD.ROAD_LENGTH
+            );
+
+        }
 
     }
 
