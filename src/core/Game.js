@@ -20,6 +20,7 @@ import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
 import WorldScroller from "../world/WorldScroller.js";
 import CameraFollow from "./camera/CameraFollow.js";
+
 class Game {
 
     constructor() {
