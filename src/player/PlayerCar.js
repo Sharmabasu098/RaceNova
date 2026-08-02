@@ -1,10 +1,13 @@
 import * as THREE from "three";
+import PlayerMovement from "./PlayerMovement.js";
 
 export default class PlayerCar {
 
     constructor(scene) {
 
         this.scene = scene;
+
+        this.movement = new PlayerMovement(this);
 
         const geometry = new THREE.BoxGeometry(1.2, 0.6, 2.4);
 
@@ -23,11 +26,15 @@ export default class PlayerCar {
     }
 
     update(deltaTime) {
-        // आगे यहीं कार की मूवमेंट जोड़ेंगे
+
+        this.movement.update(deltaTime);
+
     }
 
     getMesh() {
+
         return this.mesh;
+
     }
 
 }
