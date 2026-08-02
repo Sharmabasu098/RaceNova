@@ -4,23 +4,46 @@ import SteeringController from "./SteeringController.js";
 
 export default class PlayerCar {
 
-    constructor(scene) {
+    constructor(scene, speedController) {
 
         this.scene = scene;
 
-        this.movement = new PlayerMovement(this);
+        this.speedController = speedController;
 
-        this.steering = new SteeringController(this);
+        this.movement =
+            new PlayerMovement(
+                this,
+                this.speedController
+            );
 
-        const geometry = new THREE.BoxGeometry(1.2, 0.6, 2.4);
+        this.steering =
+            new SteeringController(this);
 
-        const material = new THREE.MeshStandardMaterial({
-            color: 0xff0000
-        });
+        const geometry =
+            new THREE.BoxGeometry(
+                1.2,
+                0.6,
+                2.4
+            );
 
-        this.mesh = new THREE.Mesh(geometry, material);
+        const material =
+            new THREE.MeshStandardMaterial({
 
-        this.mesh.position.set(0, 0.4, 5);
+                color: 0xff0000
+
+            });
+
+        this.mesh =
+            new THREE.Mesh(
+                geometry,
+                material
+            );
+
+        this.mesh.position.set(
+            0,
+            0.4,
+            5
+        );
 
         this.mesh.castShadow = true;
 
@@ -36,15 +59,27 @@ export default class PlayerCar {
 
     moveLeft(deltaTime) {
 
-    this.steering.moveLeft(deltaTime);
+        this.steering.moveLeft(deltaTime);
 
-}
+    }
 
-moveRight(deltaTime) {
+    moveRight(deltaTime) {
 
-    this.steering.moveRight(deltaTime);
+        this.steering.moveRight(deltaTime);
 
-}
+    }
+
+    brake(deltaTime) {
+
+        this.movement.brake(deltaTime);
+
+    }
+
+    getSpeed() {
+
+        return this.movement.getSpeed();
+
+    }
 
     getMesh() {
 
