@@ -252,61 +252,62 @@ this.roadManager.start(this.scene);
 
     update(deltaTime) {
 
-        if (
-    this.roadManager &&
-    typeof this.roadManager.update === "function"
-) {
+    if (
+        this.roadManager &&
+        typeof this.roadManager.update === "function"
+    ) {
 
-    this.roadManager.update(deltaTime);
+        this.roadManager.update(deltaTime);
 
-        }
+    }
 
-        if (
-            this.roadBuilder &&
-            typeof this.roadBuilder.update === "function"
-        ) {
+    if (
+        this.roadBuilder &&
+        typeof this.roadBuilder.update === "function"
+    ) {
 
-            this.roadBuilder.update(deltaTime);
+        this.roadBuilder.update(deltaTime);
 
-        }
+    }
 
-        if (
-            this.player &&
-            typeof this.player.update === "function"
-        ) {
+    if (
+        this.player &&
+        typeof this.player.update === "function"
+    ) {
 
-            this.player.update(deltaTime);
+        this.player.update(deltaTime);
 
-        }
+    }
 
-        if (
-    this.trafficManager &&
-    typeof this.trafficManager.update === "function"
-) {
+    if (
+        this.trafficManager &&
+        typeof this.trafficManager.update === "function"
+    ) {
 
-    this.trafficManager.update(
-        this.roadManager.getSpeed()
-    );
+        this.trafficManager.update(
+            deltaTime,
+            this.roadManager.getSpeed()
+        );
 
-        }
+    }
 
-        if (
-    this.touchControls &&
-    typeof this.touchControls.update === "function"
-) {
+    if (
+        this.touchControls &&
+        typeof this.touchControls.update === "function"
+    ) {
 
-    this.touchControls.update(deltaTime);
+        this.touchControls.update(deltaTime);
 
-        }
+    }
 
-        if (
-            this.aiManager &&
-            typeof this.aiManager.update === "function"
-        ) {
+    if (
+        this.aiManager &&
+        typeof this.aiManager.update === "function"
+    ) {
 
-            this.aiManager.update(deltaTime);
+        this.aiManager.update(deltaTime);
 
-        }
+    }
 
     }
 
