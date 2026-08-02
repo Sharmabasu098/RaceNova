@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import PlayerMovement from "./PlayerMovement.js";
+import SteeringController from "./SteeringController.js";
 
 export default class PlayerCar {
 
@@ -8,6 +9,8 @@ export default class PlayerCar {
         this.scene = scene;
 
         this.movement = new PlayerMovement(this);
+
+        this.steering = new SteeringController(this);
 
         const geometry = new THREE.BoxGeometry(1.2, 0.6, 2.4);
 
@@ -30,6 +33,18 @@ export default class PlayerCar {
         this.movement.update(deltaTime);
 
     }
+
+    moveLeft(deltaTime) {
+
+    this.steering.moveLeft(deltaTime);
+
+}
+
+moveRight(deltaTime) {
+
+    this.steering.moveRight(deltaTime);
+
+}
 
     getMesh() {
 
