@@ -19,6 +19,7 @@ import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
 import TrafficManager from "../traffic/TrafficManager.js";
+import CollisionManager from "../physics/CollisionManager.js";
 
 class Game {
 
@@ -65,6 +66,7 @@ class Game {
         this.uiManager = null;
         this.physicsManager = null;
         this.trafficManager = null;
+        this.collisionManager = null;
 
         // ==========================
         // Game State
@@ -166,6 +168,12 @@ this.trafficManager.spawnCar(
     0,
     -30
 );
+
+    this.collisionManager =
+    new CollisionManager(
+        this.player,
+        this.trafficManager
+    );
 
     this.roadManager =
     new RoadManager(
@@ -297,6 +305,22 @@ this.roadManager.start(this.scene);
     ) {
 
         this.touchControls.update(deltaTime);
+
+    }
+
+    if (
+        this.collisionManager &&
+        typeof this.collisionManager.update === "function"
+    ) {
+
+        this.collisionManager.update();
+
+        if (this.collisionManager.isCrashed()) {
+
+            console.log("💥 Collision Detected!");
+            console.log("🏁 GAME OVER");
+
+        }
 
     }
 
