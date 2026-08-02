@@ -20,6 +20,7 @@ import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
 import TrafficManager from "../traffic/TrafficManager.js";
 import CollisionManager from "../physics/CollisionManager.js";
+import SpeedController from "../engine/SpeedController.js";
 
 class Game {
 
@@ -67,6 +68,7 @@ class Game {
         this.physicsManager = null;
         this.trafficManager = null;
         this.collisionManager = null;
+        this.speedController = null;
 
         // ==========================
         // Game State
@@ -157,6 +159,8 @@ createWorld() {
 
     this.player =
         new PlayerCar(this.scene);
+
+    this.speedController = new SpeedController();
 
     this.touchControls =
         new TouchControls(this.player);
@@ -261,11 +265,24 @@ this.roadManager.start(this.scene);
     update(deltaTime) {
 
     if (
+    this.speedController &&
+    typeof this.speedController.update === "function"
+    ) {
+
+    this.speedController.update(deltaTime);
+
+    }    
+
+    if (
         this.roadManager &&
         typeof this.roadManager.update === "function"
     ) {
 
-        this.roadManager.update(deltaTime);
+        this.roadManager.setSpeed(
+    this.speedController.getSpeed()
+);
+
+this.roadManager.update(deltaTime);
 
     }
 
