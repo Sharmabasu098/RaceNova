@@ -270,6 +270,15 @@ this.roadManager.start(this.scene);
         }
 
         if (
+    this.touchControls &&
+    typeof this.touchControls.update === "function"
+) {
+
+    this.touchControls.update(deltaTime);
+
+        }
+
+        if (
             this.aiManager &&
             typeof this.aiManager.update === "function"
         ) {
