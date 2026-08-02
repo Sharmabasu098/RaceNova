@@ -164,7 +164,7 @@ createWorld() {
         this.roadBarrier
     );
 
-this.roadManager.start();
+this.roadManager.start(this.scene);
 
     console.log("World Loaded");
 
