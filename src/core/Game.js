@@ -158,7 +158,10 @@ createWorld() {
     );
 
     this.player =
-        new PlayerCar(this.scene);
+    new PlayerCar(
+        this.scene,
+        this.speedController
+    );
 
     this.speedController = new SpeedController();
 
