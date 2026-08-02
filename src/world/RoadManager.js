@@ -48,6 +48,8 @@ export default class RoadManager {
 
 update(deltaTime) {
 
+    this.speed = Math.min(this.speed, this.maxSpeed);
+
     if (!this.roadPool) return;
 
     const segments = this.roadPool.getSegments();
