@@ -35,4 +35,16 @@ export default class RoadPool {
 
     }
 
+    reset() {
+
+    this.segments.forEach((segment, index) => {
+
+        segment.setZ(
+            -index * 1000
+        );
+
+    });
+
+    }
+
 }
