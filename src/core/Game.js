@@ -19,7 +19,6 @@ import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
 import WorldScroller from "../world/WorldScroller.js";
-import CameraFollow from "./camera/CameraFollow.js";
 
 class Game {
 
@@ -42,7 +41,6 @@ class Game {
         this.scene = null;
         this.camera = null;
         this.renderer = null;
-        this.cameraFollow = null;
 
         // ==========================
         // World
@@ -159,11 +157,6 @@ createWorld() {
 
     this.touchControls =
         new TouchControls(this.player);
-
-    this.cameraFollow =
-    new CameraFollow(
-        this.camera,
-        this.player
     );
 
     this.roadManager =
