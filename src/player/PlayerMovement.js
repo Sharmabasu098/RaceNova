@@ -2,31 +2,28 @@
  * ============================================================
  * RaceNova
  * Player Movement System
- * Version : 2.0
+ * Version : 3.0
  * ============================================================
  */
 
 export default class PlayerMovement {
 
-    constructor(player) {
+    constructor(player, speedController) {
 
         this.player = player;
 
-        this.speed = 0;
-
-        this.acceleration = 0.08;
-
-        this.maxSpeed = 0.60;
-
-        this.brakeForce = 0.15;
+        this.speedController = speedController;
 
     }
 
     update(deltaTime) {
 
-        if (this.speed < this.maxSpeed) {
+        if (
+            this.speedController &&
+            typeof this.speedController.update === "function"
+        ) {
 
-            this.speed += this.acceleration * deltaTime;
+            this.speedController.update(deltaTime);
 
         }
 
@@ -34,11 +31,12 @@ export default class PlayerMovement {
 
     brake(deltaTime) {
 
-        this.speed -= this.brakeForce * deltaTime;
+        if (
+            this.speedController &&
+            typeof this.speedController.brake === "function"
+        ) {
 
-        if (this.speed < 0) {
-
-            this.speed = 0;
+            this.speedController.brake(deltaTime);
 
         }
 
@@ -46,7 +44,29 @@ export default class PlayerMovement {
 
     getSpeed() {
 
-        return this.speed;
+        if (
+            this.speedController &&
+            typeof this.speedController.getSpeed === "function"
+        ) {
+
+            return this.speedController.getSpeed();
+
+        }
+
+        return 0;
+
+    }
+
+    setSpeed(speed) {
+
+        if (
+            this.speedController &&
+            typeof this.speedController.setSpeed === "function"
+        ) {
+
+            this.speedController.setSpeed(speed);
+
+        }
 
     }
 
