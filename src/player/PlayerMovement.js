@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Player Movement System
- * Version : 1.0
+ * Version : 2.0
  * ============================================================
  */
 
@@ -29,8 +29,6 @@ export default class PlayerMovement {
             this.speed += this.acceleration * deltaTime;
 
         }
-
-        const mesh = this.player.getMesh();
 
     }
 
