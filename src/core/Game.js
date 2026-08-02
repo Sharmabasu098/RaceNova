@@ -21,6 +21,7 @@ import RoadManager from "../world/RoadManager.js";
 import TrafficManager from "../traffic/TrafficManager.js";
 import CollisionManager from "../physics/CollisionManager.js";
 import SpeedController from "../engine/SpeedController.js";
+import CameraFollow from "./camera/CameraFollow.js";
 
 class Game {
 
@@ -69,6 +70,7 @@ class Game {
         this.trafficManager = null;
         this.collisionManager = null;
         this.speedController = null;
+        this.cameraFollow = null;
 
         // ==========================
         // Game State
@@ -176,6 +178,12 @@ createWorld() {
 
     this.touchControls =
         new TouchControls(this.player);
+
+    this.cameraFollow =
+    new CameraFollow(
+        this.camera,
+        this.player
+    );
 
     // ==========================
     // Traffic
@@ -325,6 +333,15 @@ this.roadManager.update(deltaTime);
     ) {
 
         this.player.update(deltaTime);
+
+        if (
+    this.cameraFollow &&
+    typeof this.cameraFollow.update === "function"
+    ) {
+
+    this.cameraFollow.update();
+
+        }
 
     }
 
