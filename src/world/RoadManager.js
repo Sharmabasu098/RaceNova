@@ -46,8 +46,6 @@ export default class RoadManager {
 
     }
 
-}
-
 update(deltaTime) {
 
     if (!this.roadPool) return;
