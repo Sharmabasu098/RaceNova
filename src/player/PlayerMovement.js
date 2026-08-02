@@ -32,8 +32,6 @@ export default class PlayerMovement {
 
         const mesh = this.player.getMesh();
 
-        mesh.position.z -= this.speed;
-
     }
 
     brake(deltaTime) {
