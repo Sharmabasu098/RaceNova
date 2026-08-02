@@ -18,7 +18,6 @@ import RoadMarkings from "../world/RoadMarkings.js";
 import PlayerCar from "../player/PlayerCar.js";
 import TouchControls from "../controls/TouchControls.js";
 import RoadManager from "../world/RoadManager.js";
-import WorldScroller from "../world/WorldScroller.js";
 
 class Game {
 
@@ -157,7 +156,6 @@ createWorld() {
 
     this.touchControls =
         new TouchControls(this.player);
-    );
 
     this.roadManager =
     new RoadManager(
@@ -268,15 +266,6 @@ this.roadManager.start();
         ) {
 
             this.player.update(deltaTime);
-
-        }
-
-        if (
-    this.cameraFollow &&
-    typeof this.cameraFollow.update === "function"
-) {
-
-    this.cameraFollow.update();
 
         }
 
