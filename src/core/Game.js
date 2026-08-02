@@ -157,39 +157,60 @@ createWorld() {
         this.roadBarrier.getMesh()
     );
 
-    this.player =
-    new PlayerCar(
-        this.scene,
-        this.speedController
-    );
+    // ==========================
+    // Engine
+    // ==========================
 
-    this.speedController = new SpeedController();
+    this.speedController =
+        new SpeedController();
+
+    // ==========================
+    // Player
+    // ==========================
+
+    this.player =
+        new PlayerCar(
+            this.scene,
+            this.speedController
+        );
 
     this.touchControls =
         new TouchControls(this.player);
 
-    this.trafficManager =
-    new TrafficManager(this.scene);
+    // ==========================
+    // Traffic
+    // ==========================
 
-this.trafficManager.spawnCar(
-    0,
-    -30
-);
+    this.trafficManager =
+        new TrafficManager(this.scene);
+
+    this.trafficManager.spawnCar(
+        0,
+        -30
+    );
+
+    // ==========================
+    // Collision
+    // ==========================
 
     this.collisionManager =
-    new CollisionManager(
-        this.player,
-        this.trafficManager
-    );
+        new CollisionManager(
+            this.player,
+            this.trafficManager
+        );
+
+    // ==========================
+    // Road
+    // ==========================
 
     this.roadManager =
-    new RoadManager(
-        this.roadBuilder,
-        this.roadMarkings,
-        this.roadBarrier
-    );
+        new RoadManager(
+            this.roadBuilder,
+            this.roadMarkings,
+            this.roadBarrier
+        );
 
-this.roadManager.start(this.scene);
+    this.roadManager.start(this.scene);
 
     console.log("World Loaded");
 
