@@ -2,12 +2,14 @@
  * ============================================================
  * RaceNova
  * Traffic Manager
- * Version : 1.0
+ * Version : 2.0 (Production)
+ * File : src/traffic/TrafficManager.js
  * ============================================================
  */
 
 import TrafficCar from "./TrafficCar.js";
 import TrafficSpawner from "./TrafficSpawner.js";
+import { WORLD } from "../constants/worldConstants.js";
 
 export default class TrafficManager {
 
@@ -21,29 +23,67 @@ export default class TrafficManager {
 
     }
 
+    // ===================================================
+    // Spawn
+    // ===================================================
+
     spawnCar(lane, z) {
 
+        if (this.cars.length >= WORLD.MAX_TRAFFIC) {
+
+            return;
+
+        }
+
         const car = new TrafficCar(
+
             this.scene,
             lane,
             z
+
         );
 
         this.cars.push(car);
 
     }
 
-    update(deltaTime, speed) {
+    // ===================================================
+    // Update
+    // ===================================================
+
+    update(deltaTime, worldSpeed) {
 
         this.spawner.update(deltaTime);
 
-        for (let i = 0; i < this.cars.length; i++) {
+        for (let i = this.cars.length - 1; i >= 0; i--) {
 
-            this.cars[i].update(speed);
+            const car = this.cars[i];
+
+            if (!car.isActive()) {
+
+                this.cars.splice(i, 1);
+
+                continue;
+
+            }
+
+            car.update(worldSpeed);
+
+            if (car.isOutOfWorld()) {
+
+                car.destroy();
+
+                this.cars.splice(i, 1);
+
+            }
 
         }
 
     }
+
+    // ===================================================
+    // Getters
+    // ===================================================
 
     getCars() {
 
@@ -51,21 +91,25 @@ export default class TrafficManager {
 
     }
 
+    getCarCount() {
+
+        return this.cars.length;
+
+    }
+
+    // ===================================================
+    // Clear
+    // ===================================================
+
     clear() {
 
-        for (let i = 0; i < this.cars.length; i++) {
+        for (const car of this.cars) {
 
-            const mesh = this.cars[i].getMesh();
-
-            if (mesh) {
-
-                this.scene.remove(mesh);
-
-            }
+            car.destroy();
 
         }
 
-        this.cars = [];
+        this.cars.length = 0;
 
     }
 
