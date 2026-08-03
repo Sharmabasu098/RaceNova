@@ -303,11 +303,13 @@ createWorld() {
     update(deltaTime) {
 
     if (
-    this.speedController &&
-    typeof this.speedController.update === "function"
+        this.gameSpeed &&
+        typeof this.gameSpeed.update === "function"
     ) {
 
-    this.gameSpeed.update(deltaTime);
+        this.gameSpeed.update(deltaTime);
+
+    }
 
     if (
         this.roadManager &&
@@ -315,10 +317,10 @@ createWorld() {
     ) {
 
         this.roadManager.setSpeed(
-    this.speedController.getSpeed()
-);
+            this.gameSpeed.getSpeed()
+        );
 
-this.roadManager.update(deltaTime);
+        this.roadManager.update(deltaTime);
 
     }
 
@@ -338,14 +340,14 @@ this.roadManager.update(deltaTime);
 
         this.player.update(deltaTime);
 
-        if (
-    this.cameraFollow &&
-    typeof this.cameraFollow.update === "function"
+    }
+
+    if (
+        this.cameraFollow &&
+        typeof this.cameraFollow.update === "function"
     ) {
 
-    this.cameraFollow.update();
-
-        }
+        this.cameraFollow.update();
 
     }
 
@@ -356,7 +358,7 @@ this.roadManager.update(deltaTime);
 
         this.trafficManager.update(
             deltaTime,
-            this.roadManager.getSpeed()
+            this.gameSpeed.getSpeed()
         );
 
     }
