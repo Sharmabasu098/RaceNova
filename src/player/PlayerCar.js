@@ -59,15 +59,15 @@ export default class PlayerCar {
 
     }
 
-    moveLeft(deltaTime) {
+    moveLeft() {
 
-        this.steering.moveLeft(deltaTime);
+        this.steering.moveLeft();
 
     }
 
-    moveRight(deltaTime) {
+    moveRight() {
 
-        this.steering.moveRight(deltaTime);
+        this.steering.moveRight();
 
     }
 
