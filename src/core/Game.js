@@ -22,6 +22,7 @@ import TrafficManager from "../traffic/TrafficManager.js";
 import CollisionManager from "../physics/CollisionManager.js";
 import SpeedController from "../engine/SpeedController.js";
 import CameraFollow from "./camera/CameraFollow.js";
+import GameSpeed from "../engine/GameSpeed.js";
 
 class Game {
 
@@ -71,6 +72,7 @@ class Game {
         this.collisionManager = null;
         this.speedController = null;
         this.cameraFollow = null;
+        this.gameSpeed = null;
 
         // ==========================
         // Game State
@@ -166,6 +168,11 @@ createWorld() {
     this.speedController =
         new SpeedController();
 
+    this.gameSpeed =
+    new GameSpeed(
+        this.speedController
+    );
+
     // ==========================
     // Player
     // ==========================
@@ -189,8 +196,10 @@ createWorld() {
     // Traffic
     // ==========================
 
-    this.trafficManager =
-        new TrafficManager(this.scene);
+    this.trafficManager.update(
+    deltaTime,
+    this.gameSpeed.getSpeed()
+);
 
     this.trafficManager.spawnCar(
         0,
@@ -211,12 +220,9 @@ createWorld() {
     // Road
     // ==========================
 
-    this.roadManager =
-        new RoadManager(
-            this.roadBuilder,
-            this.roadMarkings,
-            this.roadBarrier
-        );
+    this.roadManager.setSpeed(
+    this.gameSpeed.getSpeed()
+);
 
     this.roadManager.start(this.scene);
 
@@ -301,9 +307,7 @@ createWorld() {
     typeof this.speedController.update === "function"
     ) {
 
-    this.speedController.update(deltaTime);
-
-    }    
+    this.gameSpeed.update(deltaTime);
 
     if (
         this.roadManager &&
