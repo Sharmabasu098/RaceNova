@@ -55,7 +55,7 @@ export default class PlayerCar {
 
         this.movement.update(deltaTime);
 
-this.steering.update(deltaTime);
+        this.steering.update(deltaTime);
 
     }
 
