@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Steering Controller
- * Version : 1.0
+ * Version : 2.0
  * ============================================================
  */
 
@@ -12,37 +12,48 @@ export default class SteeringController {
 
         this.player = player;
 
-        this.moveSpeed = 8;
+        this.laneWidth = 4;
 
-        this.minX = -4;
+        this.currentLane = 0;
 
-        this.maxX = 4;
+        this.targetX = 0;
+
+        this.steeringSpeed = 8;
 
     }
 
-    moveLeft(deltaTime) {
+    update(deltaTime) {
 
         const mesh = this.player.getMesh();
 
-        mesh.position.x -= this.moveSpeed * deltaTime;
+        mesh.position.x +=
+            (this.targetX - mesh.position.x) *
+            this.steeringSpeed *
+            deltaTime;
 
-        if (mesh.position.x < this.minX) {
+    }
 
-            mesh.position.x = this.minX;
+    moveLeft() {
+
+        if (this.currentLane > -1) {
+
+            this.currentLane--;
+
+            this.targetX =
+                this.currentLane * this.laneWidth;
 
         }
 
     }
 
-    moveRight(deltaTime) {
+    moveRight() {
 
-        const mesh = this.player.getMesh();
+        if (this.currentLane < 1) {
 
-        mesh.position.x += this.moveSpeed * deltaTime;
+            this.currentLane++;
 
-        if (mesh.position.x > this.maxX) {
-
-            mesh.position.x = this.maxX;
+            this.targetX =
+                this.currentLane * this.laneWidth;
 
         }
 
