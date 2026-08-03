@@ -142,6 +142,10 @@ class Game {
 
 createWorld() {
 
+    // ==========================
+    // Road
+    // ==========================
+
     this.roadBuilder =
         new RoadBuilder(this.scene);
 
@@ -169,9 +173,9 @@ createWorld() {
         new SpeedController();
 
     this.gameSpeed =
-    new GameSpeed(
-        this.speedController
-    );
+        new GameSpeed(
+            this.speedController
+        );
 
     // ==========================
     // Player
@@ -184,22 +188,24 @@ createWorld() {
         );
 
     this.touchControls =
-        new TouchControls(this.player);
+        new TouchControls(
+            this.player
+        );
 
     this.cameraFollow =
-    new CameraFollow(
-        this.camera,
-        this.player
-    );
+        new CameraFollow(
+            this.camera,
+            this.player
+        );
 
     // ==========================
     // Traffic
     // ==========================
 
-    this.trafficManager.update(
-    deltaTime,
-    this.gameSpeed.getSpeed()
-);
+    this.trafficManager =
+        new TrafficManager(
+            this.scene
+        );
 
     this.trafficManager.spawnCar(
         0,
@@ -217,16 +223,21 @@ createWorld() {
         );
 
     // ==========================
-    // Road
+    // Road Manager
     // ==========================
 
-    this.roadManager.setSpeed(
-    this.gameSpeed.getSpeed()
-);
+    this.roadManager =
+        new RoadManager(
+            this.roadBuilder,
+            this.roadMarkings,
+            this.roadBarrier
+        );
 
-    this.roadManager.start(this.scene);
+    this.roadManager.start(
+        this.scene
+    );
 
-    console.log("World Loaded");
+    console.log("✅ World Loaded");
 
 }
 
