@@ -2,9 +2,12 @@
  * ============================================================
  * RaceNova
  * Traffic Spawner
- * Version : 1.0
+ * Version : 2.0 (Production)
+ * File : src/traffic/TrafficSpawner.js
  * ============================================================
  */
+
+import { WORLD } from "../constants/worldConstants.js";
 
 export default class TrafficSpawner {
 
@@ -14,7 +17,8 @@ export default class TrafficSpawner {
 
         this.spawnTimer = 0;
 
-        this.spawnInterval = 2.5;
+        this.spawnInterval =
+            WORLD.TRAFFIC_SPAWN_INTERVAL;
 
     }
 
@@ -22,17 +26,72 @@ export default class TrafficSpawner {
 
         this.spawnTimer += deltaTime;
 
-        if (this.spawnTimer >= this.spawnInterval) {
+        if (this.spawnTimer < this.spawnInterval) {
 
-            this.spawnTimer = 0;
+            return;
 
-            const lane =
-                Math.floor(Math.random() * 3) - 1;
+        }
 
-            this.trafficManager.spawnCar(
-                lane * 4,
-                -80
-            );
+        this.spawnTimer = 0;
+
+        this.spawnTraffic();
+
+    }
+
+    // ===================================================
+    // Spawn Logic
+    // ===================================================
+
+    spawnTraffic() {
+
+        const cars =
+            this.trafficManager.getCars();
+
+        const lanes =
+            [...WORLD.LANE_POSITIONS];
+
+        // Random Lane
+
+        lanes.sort(() => Math.random() - 0.5);
+
+        for (const lane of lanes) {
+
+            let blocked = false;
+
+            for (const car of cars) {
+
+                if (!car.isActive()) continue;
+
+                if (
+                    car.getLane() === lane &&
+                    Math.abs(
+                        car.getZ() -
+                        WORLD.TRAFFIC_SPAWN_DISTANCE
+                    ) <
+                    WORLD.TRAFFIC_MIN_GAP
+                ) {
+
+                    blocked = true;
+
+                    break;
+
+                }
+
+            }
+
+            if (!blocked) {
+
+                this.trafficManager.spawnCar(
+
+                    lane,
+
+                    WORLD.TRAFFIC_SPAWN_DISTANCE
+
+                );
+
+                return;
+
+            }
 
         }
 
