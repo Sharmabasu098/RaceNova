@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Steering Controller
- * Version : 2.0
+ * Version : 2.1
  * ============================================================
  */
 
@@ -14,6 +14,9 @@ export default class SteeringController {
 
         this.laneWidth = 4;
 
+        // Left = -1
+        // Center = 0
+        // Right = 1
         this.currentLane = 0;
 
         this.targetX = 0;
@@ -35,28 +38,24 @@ export default class SteeringController {
 
     moveLeft() {
 
-        if (this.currentLane > -1) {
+        if (this.currentLane <= -1) return;
 
-            this.currentLane--;
+        this.currentLane--;
 
-            this.targetX =
-                this.currentLane * this.laneWidth;
-
-        }
+        this.targetX =
+            this.currentLane * this.laneWidth;
 
     }
 
     moveRight() {
 
-        if (this.currentLane < 1) {
+        if (this.currentLane >= 1) return;
 
-            this.currentLane++;
+        this.currentLane++;
 
-            this.targetX =
-                this.currentLane * this.laneWidth;
-
-        }
+        this.targetX =
+            this.currentLane * this.laneWidth;
 
     }
 
-}
+            }
