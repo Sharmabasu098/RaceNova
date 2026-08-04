@@ -23,6 +23,7 @@ import CollisionManager from "../physics/CollisionManager.js";
 import SpeedController from "../engine/SpeedController.js";
 import CameraFollow from "./camera/CameraFollow.js";
 import GameSpeed from "../engine/GameSpeed.js";
+import HUD from "../ui/HUD.js";
 
 class Game {
 
@@ -96,6 +97,8 @@ this.lastTime = 0;
         this.speedController = null;
         this.cameraFollow = null;
         this.gameSpeed = null;
+        this.hud = null;
+        
 
         // ==========================
         // Game State
@@ -244,6 +247,12 @@ createWorld() {
             this.trafficManager
         );
 
+    // ==========================
+// HUD
+// ==========================
+
+this.hud = new HUD();
+
     console.log("==================================");
     console.log("World Loaded Successfully");
     console.log("==================================");
@@ -350,6 +359,16 @@ createWorld() {
 
     this.player?.update(deltaTime);
 
+        if (
+    this.hud &&
+    this.player
+) {
+
+    this.hud.update(
+        this.player.getSpeed()
+    );
+
+        }
     // ==========================
     // Camera
     // ==========================
