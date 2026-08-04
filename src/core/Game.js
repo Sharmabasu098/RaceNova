@@ -1,3 +1,4 @@
+
 /**
  * ============================================================
  * RaceNova
@@ -64,7 +65,6 @@ this.speedController = null;
 this.gameSpeed = null;
 
 this.cameraFollow = null;
-
 this.touchControls = null;
 
 this.trafficManager = null;
@@ -157,6 +157,8 @@ this.lastTime = 0;
 
         this.lightingManager =
             new LightingManager(this.scene);
+        
+        this.hud = new HUD();
 
     }
 
