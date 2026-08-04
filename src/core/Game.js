@@ -122,8 +122,6 @@ class Game {
 
         this.lightingManager =
             new LightingManager(this.scene);
-        
-        this.hud = new HUD();
 
     }
 
@@ -387,25 +385,23 @@ this.hud = new HUD();
      * ==========================
      */
 
-    loop(currentTime) {
+    render() {
 
-    if (!this.running) return;
+    if (
+        this.renderer &&
+        this.scene &&
+        this.camera
+    ) {
 
-    const deltaTime =
-        (currentTime - this.lastTime) / 16.666;
-
-    this.lastTime = currentTime;
-
-    this.update(deltaTime);
-
-    this.render();
-
-    requestAnimationFrame(
-        (time) => this.loop(time)
-    );
+        this.renderer.render(
+            this.scene,
+            this.camera
+        );
 
     }
 
+    }
+    
     /**
      * ==========================
      * Window Resize
