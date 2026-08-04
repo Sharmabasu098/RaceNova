@@ -166,54 +166,55 @@ this.lastTime = 0;
 createWorld() {
 
     // ==========================
-    // Road
+    // Engine
     // ==========================
 
-    this.roadBuilder =
-        new RoadBuilder(this.scene);
+    this.speedController = new SpeedController();
 
+    this.gameSpeed = new GameSpeed(
+        this.speedController
+    );
+
+    // ==========================
+    // World
+    // ==========================
+
+    this.roadBuilder = new RoadBuilder(this.scene);
     this.roadBuilder.build();
 
-    this.roadMarkings =
-        new RoadMarkings();
-
+    this.roadMarkings = new RoadMarkings();
     this.scene.add(
         this.roadMarkings.getMesh()
     );
 
-    this.roadBarrier =
-        new RoadBarrier();
-
+    this.roadBarrier = new RoadBarrier();
     this.scene.add(
         this.roadBarrier.getMesh()
     );
 
-    // ==========================
-    // Engine
-    // ==========================
+    this.roadManager = new RoadManager(
+        this.roadBuilder,
+        this.roadMarkings,
+        this.roadBarrier
+    );
 
-    this.speedController =
-        new SpeedController();
-
-    this.gameSpeed =
-        new GameSpeed(
-            this.speedController
-        );
+    this.roadManager.start(this.scene);
 
     // ==========================
     // Player
     // ==========================
 
-    this.player =
-        new PlayerCar(
-            this.scene,
-            this.speedController
-        );
+    this.player = new PlayerCar(
+        this.scene,
+        this.speedController
+    );
 
     this.touchControls =
-        new TouchControls(
-            this.player
-        );
+        new TouchControls(this.player);
+
+    // ==========================
+    // Camera
+    // ==========================
 
     this.cameraFollow =
         new CameraFollow(
@@ -226,9 +227,7 @@ createWorld() {
     // ==========================
 
     this.trafficManager =
-        new TrafficManager(
-            this.scene
-        );
+        new TrafficManager(this.scene);
 
     this.trafficManager.spawnCar(
         0,
@@ -245,22 +244,9 @@ createWorld() {
             this.trafficManager
         );
 
-    // ==========================
-    // Road Manager
-    // ==========================
-
-    this.roadManager =
-        new RoadManager(
-            this.roadBuilder,
-            this.roadMarkings,
-            this.roadBarrier
-        );
-
-    this.roadManager.start(
-        this.scene
-    );
-
-    console.log("✅ World Loaded");
+    console.log("==================================");
+    console.log("World Loaded Successfully");
+    console.log("==================================");
 
 }
 
