@@ -30,89 +30,54 @@ class Game {
 
     constructor() {
 
-        // ==========================
-        // Core Managers
-        // ==========================
+    // Core Managers
+    this.sceneManager = null;
+    this.cameraManager = null;
+    this.rendererManager = null;
+    this.lightingManager = null;
 
-        this.sceneManager = null;
-        this.cameraManager = null;
-        this.rendererManager = null;
-        this.lightingManager = null;
-        this.worldScroller = null;
+    // Three.js
+    this.scene = null;
+    this.camera = null;
+    this.renderer = null;
 
-        // ==========================
-        // Three.js References
-        // ==========================
+    // World
+    this.roadBuilder = null;
+    this.roadBarrier = null;
+    this.roadMarkings = null;
+    this.roadManager = null;
 
-        this.scene = null;
-        this.camera = null;
-        this.renderer = null;
+    // Player
+    this.player = null;
 
-        // ==========================
-        // World
-        // ==========================
+    // Game Systems
+    this.speedController = null;
+    this.gameSpeed = null;
+    this.cameraFollow = null;
+    this.touchControls = null;
+    this.trafficManager = null;
+    this.collisionManager = null;
+    this.hud = null;
 
-        this.roadBuilder = null;
-        this.roadBarrier = null;
-        this.roadMarkings = null;
-        this.roadManager = null;
+    // Future Modules
+    this.aiManager = null;
+    this.vehicleManager = null;
+    this.coinManager = null;
+    this.nitroManager = null;
+    this.environmentManager = null;
+    this.audioManager = null;
+    this.uiManager = null;
+    this.physicsManager = null;
 
-        // ==========================
-// Game Systems
-// ==========================
-
-this.speedController = null;
-this.gameSpeed = null;
-
-this.cameraFollow = null;
-this.touchControls = null;
-
-this.trafficManager = null;
-
-this.collisionManager = null;
-
-// ==========================
-// Game State
-// ==========================
-
-this.running = false;
-
-this.lastTime = 0;
-
-        // ==========================
-        // Future Modules
-        // ==========================
-
-        this.player = null;
-        this.aiManager = null;
-        this.vehicleManager = null;
-        this.coinManager = null;
-        this.nitroManager = null;
-        this.environmentManager = null;
-        this.audioManager = null;
-        this.uiManager = null;
-        this.physicsManager = null;
-        this.trafficManager = null;
-        this.collisionManager = null;
-        this.speedController = null;
-        this.cameraFollow = null;
-        this.gameSpeed = null;
-        this.hud = null;
-        
-
-        // ==========================
-        // Game State
-        // ==========================
-
-        this.running = false;
-        this.paused = false;
-
-        this.lastTime = 0;
-        this.deltaTime = 0;
-        this.frameId = null;
+    // Game State
+    this.running = false;
+    this.paused = false;
+    this.lastTime = 0;
+    this.deltaTime = 0;
+    this.frameId = null;
 
     }
-
+    
     /**
      * ==========================
      * Initialize Game
