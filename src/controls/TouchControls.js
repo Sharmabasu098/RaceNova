@@ -1,7 +1,8 @@
 /**
  * ====================================
  * RaceNova
- * Touch Controls
+ * Swipe Controls
+ * Version : 1.0
  * ====================================
  */
 
@@ -11,8 +12,10 @@ export default class TouchControls {
 
         this.player = player;
 
-        this.leftPressed = false;
-        this.rightPressed = false;
+        this.startX = 0;
+        this.endX = 0;
+
+        this.minSwipeDistance = 50;
 
         this.init();
 
@@ -22,42 +25,35 @@ export default class TouchControls {
 
         window.addEventListener("touchstart", (event) => {
 
-            const x = event.touches[0].clientX;
+            this.startX = event.touches[0].clientX;
 
-            if (x < window.innerWidth / 2) {
+        });
 
-                this.leftPressed = true;
+        window.addEventListener("touchend", (event) => {
 
-            } else {
+            this.endX = event.changedTouches[0].clientX;
 
-                this.rightPressed = true;
+            const distance = this.endX - this.startX;
+
+            if (distance > this.minSwipeDistance) {
+
+                this.player.moveRight();
+
+            }
+
+            else if (distance < -this.minSwipeDistance) {
+
+                this.player.moveLeft();
 
             }
 
         });
 
-        window.addEventListener("touchend", () => {
-
-            this.leftPressed = false;
-            this.rightPressed = false;
-
-        });
-
     }
 
-    update(deltaTime) {
+    update() {
 
-        if (this.leftPressed) {
-
-            this.player.moveLeft(deltaTime);
-
-        }
-
-        if (this.rightPressed) {
-
-            this.player.moveRight(deltaTime);
-
-        }
+        // Swipe Control doesn't need update.
 
     }
 
