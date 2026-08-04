@@ -41,8 +41,8 @@ export default class PlayerCar {
 
         this.mesh.position.set(
             0,
-            0.4,
-            5
+            0.35,
+            8
         );
 
         this.mesh.castShadow = true;
