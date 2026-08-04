@@ -15,7 +15,7 @@ export default class TouchControls {
         this.startX = 0;
         this.endX = 0;
 
-        this.minSwipeDistance = 50;
+        this.minSwipeDistance = 80;
 
         this.init();
 
