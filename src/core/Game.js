@@ -322,19 +322,17 @@ createWorld() {
 
     update(deltaTime) {
 
-    if (
-        this.gameSpeed &&
-        typeof this.gameSpeed.update === "function"
-    ) {
+    // ==========================
+    // Engine Speed
+    // ==========================
 
-        this.gameSpeed.update(deltaTime);
+    this.gameSpeed?.update(deltaTime);
 
-    }
+    // ==========================
+    // Road
+    // ==========================
 
-    if (
-        this.roadManager &&
-        typeof this.roadManager.update === "function"
-    ) {
+    if (this.roadManager) {
 
         this.roadManager.setSpeed(
             this.gameSpeed.getSpeed()
@@ -344,78 +342,56 @@ createWorld() {
 
     }
 
-    if (
-        this.roadBuilder &&
-        typeof this.roadBuilder.update === "function"
-    ) {
+    this.roadBuilder?.update?.(deltaTime);
 
-        this.roadBuilder.update(deltaTime);
+    // ==========================
+    // Player
+    // ==========================
 
-    }
+    this.player?.update(deltaTime);
 
-    if (
-        this.player &&
-        typeof this.player.update === "function"
-    ) {
+    // ==========================
+    // Camera
+    // ==========================
 
-        this.player.update(deltaTime);
+    this.cameraFollow?.update();
 
-    }
+    // ==========================
+    // Traffic
+    // ==========================
 
-    if (
-        this.cameraFollow &&
-        typeof this.cameraFollow.update === "function"
-    ) {
+    this.trafficManager?.update(
+        deltaTime,
+        this.gameSpeed.getSpeed()
+    );
 
-        this.cameraFollow.update();
+    // ==========================
+    // Controls
+    // ==========================
 
-    }
+    this.touchControls?.update(deltaTime);
 
-    if (
-        this.trafficManager &&
-        typeof this.trafficManager.update === "function"
-    ) {
+    // ==========================
+    // Collision
+    // ==========================
 
-        this.trafficManager.update(
-            deltaTime,
-            this.gameSpeed.getSpeed()
-        );
-
-    }
-
-    if (
-        this.touchControls &&
-        typeof this.touchControls.update === "function"
-    ) {
-
-        this.touchControls.update(deltaTime);
-
-    }
+    this.collisionManager?.update();
 
     if (
         this.collisionManager &&
-        typeof this.collisionManager.update === "function"
+        this.collisionManager.isCrashed()
     ) {
 
-        this.collisionManager.update();
-
-        if (this.collisionManager.isCrashed()) {
-
-            console.log("💥 Collision Detected!");
-            console.log("🏁 GAME OVER");
-
-        }
+        console.log("💥 Collision Detected!");
+        console.log("🏁 GAME OVER");
 
     }
 
-    if (
-        this.aiManager &&
-        typeof this.aiManager.update === "function"
-    ) {
+    // ==========================
+    // AI
+    // ==========================
 
-        this.aiManager.update(deltaTime);
-
-    }
+    this.aiManager?.update?.(deltaTime);
 
     }
 
