@@ -56,6 +56,29 @@ class Game {
         this.roadManager = null;
 
         // ==========================
+// Game Systems
+// ==========================
+
+this.speedController = null;
+this.gameSpeed = null;
+
+this.cameraFollow = null;
+
+this.touchControls = null;
+
+this.trafficManager = null;
+
+this.collisionManager = null;
+
+// ==========================
+// Game State
+// ==========================
+
+this.running = false;
+
+this.lastTime = 0;
+
+        // ==========================
         // Future Modules
         // ==========================
 
