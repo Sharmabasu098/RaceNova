@@ -25,6 +25,7 @@ import SpeedController from "../engine/SpeedController.js";
 import CameraFollow from "./camera/CameraFollow.js";
 import GameSpeed from "../engine/GameSpeed.js";
 import HUD from "../ui/HUD.js";
+import CoinManager from "../coins/CoinManager.js";
 
 class Game {
 
@@ -202,6 +203,13 @@ createWorld() {
         -30
     );
 
+        // ==========================
+    // Coin System
+    // ==========================
+
+    this.coinManager =
+        new CoinManager(this.scene);
+
     // ==========================
     // Collision
     // ==========================
@@ -334,6 +342,19 @@ this.hud = new HUD();
     );
 
         }
+
+        if (this.coinManager) {
+
+    this.coinManager.update(
+
+        deltaTime,
+
+        this.gameSpeed.getSpeed()
+
+    );
+
+        }
+        
     // ==========================
     // Camera
     // ==========================
