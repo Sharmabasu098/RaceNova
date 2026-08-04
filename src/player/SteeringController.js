@@ -2,9 +2,11 @@
  * ============================================================
  * RaceNova
  * Steering Controller
- * Version : 2.1
+ * Version : 3.0
  * ============================================================
  */
+
+import { LANE_ORDER } from "../constants/laneConstants.js";
 
 export default class SteeringController {
 
@@ -12,16 +14,12 @@ export default class SteeringController {
 
         this.player = player;
 
-        this.laneWidth = 4;
+        // 0 = Left, 1 = Center, 2 = Right
+        this.currentLaneIndex = 1;
 
-        // Left = -1
-        // Center = 0
-        // Right = 1
-        this.currentLane = 0;
+        this.targetX = LANE_ORDER[this.currentLaneIndex];
 
-        this.targetX = 0;
-
-        this.steeringSpeed = 8;
+        this.steeringSpeed = 10;
 
     }
 
@@ -38,24 +36,28 @@ export default class SteeringController {
 
     moveLeft() {
 
-        if (this.currentLane <= -1) return;
+        if (this.currentLaneIndex > 0) {
 
-        this.currentLane--;
+            this.currentLaneIndex--;
 
-        this.targetX =
-            this.currentLane * this.laneWidth;
+            this.targetX =
+                LANE_ORDER[this.currentLaneIndex];
+
+        }
 
     }
 
     moveRight() {
 
-        if (this.currentLane >= 1) return;
+        if (this.currentLaneIndex < LANE_ORDER.length - 1) {
 
-        this.currentLane++;
+            this.currentLaneIndex++;
 
-        this.targetX =
-            this.currentLane * this.laneWidth;
+            this.targetX =
+                LANE_ORDER[this.currentLaneIndex];
+
+        }
 
     }
 
-            }
+}
