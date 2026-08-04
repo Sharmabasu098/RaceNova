@@ -1,7 +1,7 @@
 /**
  * ============================================================
  * RaceNova
- * Camera Follow
+ * Camera Follow System
  * Version : 2.0
  * ============================================================
  */
@@ -15,38 +15,42 @@ export default class CameraFollow {
         this.camera = camera;
         this.player = player;
 
+        // Camera car ke piche aur upar
         this.offset = new THREE.Vector3(
             0,
-            6,
-            10
+            5,
+            8
         );
 
+        // Camera road ki taraf dekhe
         this.lookOffset = new THREE.Vector3(
             0,
             1,
-            -8
+            -15
         );
-
-        this.smoothness = 0.10;
 
     }
 
     update() {
 
-        const playerMesh = this.player.getMesh();
+        if (!this.player) return;
 
-        const targetPosition =
-            playerMesh.position.clone().add(this.offset);
+        const car = this.player.getMesh();
 
-        this.camera.position.lerp(
-            targetPosition,
-            this.smoothness
+        const targetPosition = new THREE.Vector3(
+            car.position.x + this.offset.x,
+            car.position.y + this.offset.y,
+            car.position.z + this.offset.z
         );
 
-        const lookTarget =
-            playerMesh.position.clone().add(this.lookOffset);
+        // Smooth Camera
+        this.camera.position.lerp(targetPosition, 0.12);
 
-        this.camera.lookAt(lookTarget);
+        this.camera.lookAt(
+            car.position.x + this.lookOffset.x,
+            car.position.y + this.lookOffset.y,
+            car.position.z + this.lookOffset.z
+        );
 
     }
 
