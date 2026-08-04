@@ -401,12 +401,22 @@ createWorld() {
      * ==========================
      */
 
-    render() {
+    loop(currentTime) {
 
-        this.renderer.render(
-            this.scene,
-            this.camera
-        );
+    if (!this.running) return;
+
+    const deltaTime =
+        (currentTime - this.lastTime) / 16.666;
+
+    this.lastTime = currentTime;
+
+    this.update(deltaTime);
+
+    this.render();
+
+    requestAnimationFrame(
+        (time) => this.loop(time)
+    );
 
     }
 
