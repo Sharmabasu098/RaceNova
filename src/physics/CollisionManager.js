@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Collision Manager
- * Version : 3.0
+ * Version : 4.0
  * File : src/physics/CollisionManager.js
  * ============================================================
  */
@@ -22,7 +22,6 @@ export default class CollisionManager {
         this.crashed = false;
 
         this.carCollisionDistance = 2.0;
-        this.coinPickupDistance = 8.0;
 
     }
 
@@ -32,9 +31,9 @@ export default class CollisionManager {
 
         const playerMesh = this.player.getMesh();
 
-        // ==========================
+        // ==========================================
         // Traffic Collision
-        // ==========================
+        // ==========================================
 
         if (this.trafficManager) {
 
@@ -63,9 +62,9 @@ export default class CollisionManager {
 
         }
 
-        // ==========================
-        // Coin Collection
-        // ==========================
+        // ==========================================
+        // Coin Collection (Lane Based)
+        // ==========================================
 
         if (this.coinManager) {
 
@@ -77,14 +76,21 @@ export default class CollisionManager {
 
                 if (!coin.isActive()) continue;
 
-                const distance =
-                    playerMesh.position.distanceTo(
-                        coin.getMesh().position
-                    );
+                const coinMesh = coin.getMesh();
 
-                console.log("Coin Distance:", distance);
+                const sameLane =
+                    Math.abs(
+                        playerMesh.position.x -
+                        coinMesh.position.x
+                    ) < 0.6;
 
-                if (distance < this.coinPickupDistance) {
+                const nearPlayer =
+                    Math.abs(
+                        playerMesh.position.z -
+                        coinMesh.position.z
+                    ) < 2.5;
+
+                if (sameLane && nearPlayer) {
 
                     this.coinManager.collectCoin(i);
 
