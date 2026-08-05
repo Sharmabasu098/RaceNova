@@ -51,7 +51,7 @@ export default class Coin {
 
         this.mesh.position.set(
             laneX,
-            0.8,
+            0.35,
             startZ
         );
 
