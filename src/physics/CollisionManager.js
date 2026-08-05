@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Collision Manager
- * Version : 2.0
+ * Version : 3.0
  * File : src/physics/CollisionManager.js
  * ============================================================
  */
@@ -21,8 +21,8 @@ export default class CollisionManager {
 
         this.crashed = false;
 
-        this.coinPickupDistance = 1.6;
         this.carCollisionDistance = 2.0;
+        this.coinPickupDistance = 3.0;
 
     }
 
@@ -81,6 +81,8 @@ export default class CollisionManager {
                     playerMesh.position.distanceTo(
                         coin.getMesh().position
                     );
+
+                console.log("Coin Distance:", distance);
 
                 if (distance < this.coinPickupDistance) {
 
