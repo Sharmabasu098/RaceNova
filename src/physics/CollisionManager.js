@@ -92,7 +92,7 @@ export default class CollisionManager {
 
                 if (sameLane && nearPlayer) {
 
-                    this.coinManager.collectCoin(i);
+                    this.coinManager.collectCoin(coin);
 
                     console.log("🪙 Coin Collected");
 
