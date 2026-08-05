@@ -6,16 +6,21 @@
  * ============================================================
  */
 
-export default class CollisionManager {
+constructor(
+    player,
+    trafficManager,
+    coinManager
+) {
 
-    constructor(player, trafficManager) {
+    this.player = player;
 
-        this.player = player;
-        this.trafficManager = trafficManager;
+    this.trafficManager = trafficManager;
 
-        this.crashed = false;
+    this.coinManager = coinManager;
 
-    }
+    this.crashed = false;
+
+}
 
     update() {
 
