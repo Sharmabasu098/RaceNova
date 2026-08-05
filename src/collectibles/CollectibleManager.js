@@ -44,6 +44,18 @@ export default class CollectibleManager {
 
     }
 
+    remove(collectible) {
+
+    const index = this.collectibles.indexOf(collectible);
+
+    if (index === -1) return;
+
+    collectible.destroy();
+
+    this.collectibles.splice(index, 1);
+
+    }
+
     clear() {
 
         for (const collectible of this.collectibles) {
