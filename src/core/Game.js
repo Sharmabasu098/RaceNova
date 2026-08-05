@@ -215,10 +215,11 @@ createWorld() {
     // ==========================
 
     this.collisionManager =
-        new CollisionManager(
-            this.player,
-            this.trafficManager
-        );
+    new CollisionManager(
+        this.player,
+        this.trafficManager,
+        this.coinManager
+    );
 
     // ==========================
 // HUD
