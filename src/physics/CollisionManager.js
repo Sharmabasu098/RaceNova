@@ -22,7 +22,7 @@ export default class CollisionManager {
         this.crashed = false;
 
         this.carCollisionDistance = 2.0;
-        this.coinPickupDistance = 3.0;
+        this.coinPickupDistance = 8.0;
 
     }
 
