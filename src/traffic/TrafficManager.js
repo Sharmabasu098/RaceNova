@@ -45,11 +45,15 @@ export default class TrafficManager {
 
         this.cars.push(car);
 
+        console.log("Spawn Car");
+
     }
 
     // ===================================================
     // Update
     // ===================================================
+
+    console.log("Cars:", this.cars.length);
 
     update(deltaTime, worldSpeed) {
 
@@ -104,6 +108,8 @@ export default class TrafficManager {
     clear() {
 
         for (const car of this.cars) {
+
+            console.log("Removing Car");
 
             car.destroy();
 
