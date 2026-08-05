@@ -59,7 +59,8 @@ class Game {
     this.trafficManager = null;
     this.collisionManager = null;
     this.hud = null;
-
+    this.coinManager = null;
+        
     // Future Modules
     this.aiManager = null;
     this.vehicleManager = null;
