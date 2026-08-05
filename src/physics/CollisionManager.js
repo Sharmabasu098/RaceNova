@@ -2,25 +2,29 @@
  * ============================================================
  * RaceNova
  * Collision Manager
- * Version : 1.0
+ * Version : 2.0
+ * File : src/physics/CollisionManager.js
  * ============================================================
  */
 
-constructor(
-    player,
-    trafficManager,
-    coinManager
-) {
+export default class CollisionManager {
 
-    this.player = player;
+    constructor(
+        player,
+        trafficManager,
+        coinManager
+    ) {
 
-    this.trafficManager = trafficManager;
+        this.player = player;
+        this.trafficManager = trafficManager;
+        this.coinManager = coinManager;
 
-    this.coinManager = coinManager;
+        this.crashed = false;
 
-    this.crashed = false;
+        this.coinPickupDistance = 1.6;
+        this.carCollisionDistance = 2.0;
 
-}
+    }
 
     update() {
 
@@ -28,24 +32,63 @@ constructor(
 
         const playerMesh = this.player.getMesh();
 
-        const cars = this.trafficManager.getCars();
+        // ==========================
+        // Traffic Collision
+        // ==========================
 
-        for (const traffic of cars) {
+        if (this.trafficManager) {
 
-            const trafficMesh = traffic.getMesh();
+            const cars = this.trafficManager.getCars();
 
-            const distance =
-                playerMesh.position.distanceTo(
-                    trafficMesh.position
-                );
+            for (const traffic of cars) {
 
-            if (distance < 2.0) {
+                const trafficMesh = traffic.getMesh();
 
-                this.crashed = true;
+                const distance =
+                    playerMesh.position.distanceTo(
+                        trafficMesh.position
+                    );
 
-                console.log("💥 Collision Detected!");
+                if (distance < this.carCollisionDistance) {
 
-                break;
+                    this.crashed = true;
+
+                    console.log("💥 Collision Detected!");
+
+                    return;
+
+                }
+
+            }
+
+        }
+
+        // ==========================
+        // Coin Collection
+        // ==========================
+
+        if (this.coinManager) {
+
+            const coins = this.coinManager.getCoins();
+
+            for (let i = coins.length - 1; i >= 0; i--) {
+
+                const coin = coins[i];
+
+                if (!coin.isActive()) continue;
+
+                const distance =
+                    playerMesh.position.distanceTo(
+                        coin.getMesh().position
+                    );
+
+                if (distance < this.coinPickupDistance) {
+
+                    this.coinManager.collectCoin(i);
+
+                    console.log("🪙 Coin Collected");
+
+                }
 
             }
 
