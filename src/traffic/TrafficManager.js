@@ -45,8 +45,6 @@ export default class TrafficManager {
 
         this.cars.push(car);
 
-        alert.log("Spawn Car");
-
     }
 
     // ===================================================
@@ -54,8 +52,6 @@ export default class TrafficManager {
     // ===================================================
 
     update(deltaTime, worldSpeed) {
-
-        alert.log("Cars:", this.cars.length);
 
         this.spawner.update(deltaTime);
 
@@ -108,8 +104,6 @@ export default class TrafficManager {
     clear() {
 
         for (const car of this.cars) {
-
-            alert.log("Removing Car");
 
             car.destroy();
 
