@@ -53,9 +53,9 @@ export default class TrafficManager {
     // Update
     // ===================================================
 
-    console.log("Cars:", this.cars.length);
-
     update(deltaTime, worldSpeed) {
+
+        console.log("Cars:", this.cars.length);
 
         this.spawner.update(deltaTime);
 
