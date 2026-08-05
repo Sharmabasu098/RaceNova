@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Base Collectible
- * Version : 1.0
+ * Version : 2.0
  * ============================================================
  */
 
@@ -16,17 +16,15 @@ export default class BaseCollectible {
 
         this.active = true;
 
+        this.type = "collectible";
+
     }
 
     update(worldSpeed) {
 
-        if (!this.active) return;
+        if (!this.active || !this.mesh) return;
 
-        if (this.mesh) {
-
-            this.mesh.position.z += worldSpeed;
-
-        }
+        this.mesh.position.z += worldSpeed;
 
     }
 
@@ -47,6 +45,12 @@ export default class BaseCollectible {
     getMesh() {
 
         return this.mesh;
+
+    }
+
+    getType() {
+
+        return this.type;
 
     }
 
