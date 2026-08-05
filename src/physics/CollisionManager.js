@@ -84,7 +84,7 @@ export default class CollisionManager {
 
                 console.log("Coin Distance:", distance);
 
-                if (distance < this.coinPickupDistance) {
+                if (distance < 3.0) {
 
                     this.coinManager.collectCoin(i);
 
