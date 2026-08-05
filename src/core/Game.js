@@ -373,6 +373,19 @@ this.hud = new HUD();
     );
 
     // ==========================
+    // Coins
+    // ==========================
+
+    if (this.coinManager) {
+
+       this.coinManager.update(
+         deltaTime,
+        this.gameSpeed.getSpeed()
+    );
+
+    }
+
+    // ==========================
     // Controls
     // ==========================
 
