@@ -2,13 +2,14 @@
  * ============================================================
  * RaceNova
  * Coin Manager
- * Version : 2.0 (Production)
+ * Version : 3.0
  * File : src/coins/CoinManager.js
  * ============================================================
  */
 
 import Coin from "./Coin.js";
 import CoinSpawner from "./CoinSpawner.js";
+import CollectibleManager from "../collectibles/CollectibleManager.js";
 import { WORLD } from "../constants/worldConstants.js";
 
 export default class CoinManager {
@@ -17,11 +18,13 @@ export default class CoinManager {
 
         this.scene = scene;
 
-        this.coins = [];
+        this.collectibleManager =
+            new CollectibleManager(scene);
+
+        this.spawner =
+            new CoinSpawner(this);
 
         this.totalCollected = 0;
-
-        this.spawner = new CoinSpawner(this);
 
     }
 
@@ -31,7 +34,11 @@ export default class CoinManager {
 
     spawnCoin(lane, z) {
 
-        if (this.coins.length >= WORLD.MAX_COINS) {
+        if (
+            this.collectibleManager
+                .getCollectibles().length >=
+            WORLD.MAX_COINS
+        ) {
 
             return;
 
@@ -43,7 +50,7 @@ export default class CoinManager {
             z
         );
 
-        this.coins.push(coin);
+        this.collectibleManager.add(coin);
 
     }
 
@@ -55,47 +62,21 @@ export default class CoinManager {
 
         this.spawner.update(deltaTime);
 
-        for (let i = this.coins.length - 1; i >= 0; i--) {
-
-            const coin = this.coins[i];
-
-            if (!coin.isActive()) {
-
-                this.coins.splice(i, 1);
-
-                continue;
-
-            }
-
-            coin.update(worldSpeed);
-
-            if (coin.isOutOfWorld()) {
-
-                coin.destroy();
-
-                this.coins.splice(i, 1);
-
-            }
-
-        }
+        this.collectibleManager.update(
+            worldSpeed
+        );
 
     }
 
     // ==========================================
-    // Collect Coin
+    // Collect
     // ==========================================
 
-    collectCoin(index) {
+    collectCoin(coin) {
 
-        if (index < 0 || index >= this.coins.length) {
+        if (!coin) return;
 
-            return;
-
-        }
-
-        this.coins[index].destroy();
-
-        this.coins.splice(index, 1);
+        this.collectibleManager.remove(coin);
 
         this.totalCollected++;
 
@@ -107,7 +88,7 @@ export default class CoinManager {
 
     getCoins() {
 
-        return this.coins;
+        return this.collectibleManager.getCollectibles();
 
     }
 
@@ -123,13 +104,7 @@ export default class CoinManager {
 
     reset() {
 
-        for (const coin of this.coins) {
-
-            coin.destroy();
-
-        }
-
-        this.coins = [];
+        this.collectibleManager.clear();
 
         this.totalCollected = 0;
 
