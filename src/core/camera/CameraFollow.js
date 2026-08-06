@@ -17,17 +17,17 @@ export default class CameraFollow {
 
         // Camera Position
         this.followOffset = new THREE.Vector3(
-            0,
-            6.2,
-            10.5
-        );
+    0,
+    7.5,
+    13.5
+);
 
         // Camera Looking Point
         this.lookOffset = new THREE.Vector3(
-            0,
-            1.3,
-            -20
-        );
+    0,
+    1.8,
+    -28
+);
 
         // Smoothness
         this.followSmooth = 0.08;
