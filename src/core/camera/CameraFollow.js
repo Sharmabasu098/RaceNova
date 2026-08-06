@@ -2,7 +2,7 @@
  * ============================================================
  * RaceNova
  * Camera Follow System
- * Version : 2.0
+ * Version : 3.0 (Production)
  * ============================================================
  */
 
@@ -15,19 +15,25 @@ export default class CameraFollow {
         this.camera = camera;
         this.player = player;
 
-        // Camera car ke piche aur upar
-        this.offset = new THREE.Vector3(
+        // Camera Position
+        this.followOffset = new THREE.Vector3(
             0,
-            5,
-            8
+            6.2,
+            10.5
         );
 
-        // Camera road ki taraf dekhe
+        // Camera Looking Point
         this.lookOffset = new THREE.Vector3(
             0,
-            1,
-            -15
+            1.3,
+            -20
         );
+
+        // Smoothness
+        this.followSmooth = 0.08;
+
+        this.lookTarget =
+            new THREE.Vector3();
 
     }
 
@@ -35,21 +41,43 @@ export default class CameraFollow {
 
         if (!this.player) return;
 
-        const car = this.player.getMesh();
+        const car =
+            this.player.getMesh();
 
-        const targetPosition = new THREE.Vector3(
-            car.position.x + this.offset.x,
-            car.position.y + this.offset.y,
-            car.position.z + this.offset.z
+        // Target Position
+
+        const target =
+            new THREE.Vector3(
+                car.position.x,
+                car.position.y,
+                car.position.z
+            );
+
+        target.add(this.followOffset);
+
+        // Smooth Follow
+
+        this.camera.position.lerp(
+            target,
+            this.followSmooth
         );
 
-        // Smooth Camera
-        this.camera.position.lerp(targetPosition, 0.12);
+        // Look Ahead
+
+        this.lookTarget.set(
+
+            car.position.x,
+
+            car.position.y +
+            this.lookOffset.y,
+
+            car.position.z +
+            this.lookOffset.z
+
+        );
 
         this.camera.lookAt(
-            car.position.x + this.lookOffset.x,
-            car.position.y + this.lookOffset.y,
-            car.position.z + this.lookOffset.z
+            this.lookTarget
         );
 
     }
