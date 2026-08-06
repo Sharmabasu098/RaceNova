@@ -2,9 +2,11 @@
  * ============================================================
  * RaceNova
  * Road Manager
- * Version : 1.0
+ * Version : 2.0 (Production)
+ * File : src/world/RoadManager.js
  * ============================================================
  */
+
 import RoadPool from "./RoadPool.js";
 import { WORLD } from "../constants/worldConstants.js";
 
@@ -16,21 +18,67 @@ export default class RoadManager {
         this.roadMarkings = roadMarkings;
         this.roadBarrier = roadBarrier;
 
-        this.speed = 0.0;
-        this.maxSpeed = 0.35;
         this.roadPool = null;
+
+        this.speed = 0;
+        this.maxSpeed = 0.60;
 
     }
 
     start(scene) {
 
-    this.speed = 0.08;
+        if (!this.roadPool) {
 
-    if (!this.roadPool) {
+            this.roadPool = new RoadPool(scene);
 
-        this.roadPool = new RoadPool(scene);
+        }
+
+        this.speed = 0.08;
 
     }
+
+    update(deltaTime) {
+
+        if (!this.roadPool) return;
+
+        const moveSpeed = this.speed * deltaTime * 60;
+
+        const segments = this.roadPool.getSegments();
+
+        for (const segment of segments) {
+
+            segment.update(moveSpeed);
+
+            if (segment.getZ() >= WORLD.ROAD_LENGTH) {
+
+                let farthestZ = 0;
+
+                for (const s of segments) {
+
+                    if (s.getZ() < farthestZ) {
+
+                        farthestZ = s.getZ();
+
+                    }
+
+                }
+
+                segment.setZ(
+                    farthestZ - WORLD.ROAD_LENGTH
+                );
+
+            }
+
+        }
+
+    }
+
+    setSpeed(speed) {
+
+        this.speed = Math.min(
+            speed,
+            this.maxSpeed
+        );
 
     }
 
@@ -40,46 +88,16 @@ export default class RoadManager {
 
     }
 
-    setSpeed(speed) {
+    reset() {
 
-    this.speed = Math.min(speed, this.maxSpeed);
+        this.speed = 0.08;
 
-}
+        if (this.roadPool) {
 
-update(deltaTime) {
-
-    this.speed = Math.min(this.speed, this.maxSpeed);
-
-    if (!this.roadPool) return;
-
-    const segments = this.roadPool.getSegments();
-
-    for (const segment of segments) {
-
-        segment.update(this.speed);
-
-        if (segment.getZ() > WORLD.ROAD_LENGTH) {
-
-            let farthest = 0;
-
-            for (const s of segments) {
-
-                if (s.getZ() < farthest) {
-
-                    farthest = s.getZ();
-
-                }
-
-            }
-
-            segment.setZ(
-                farthest - WORLD.ROAD_LENGTH
-            );
+            this.roadPool.reset();
 
         }
 
     }
-
-}
 
 }
